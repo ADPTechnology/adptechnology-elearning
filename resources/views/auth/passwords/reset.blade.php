@@ -1,0 +1,90 @@
+@extends('auth.layouts.login-layout')
+
+@section('title', 'Valuem | Restablecer contraseña')
+
+@section('content')
+    <section class="background-radial-gradient overflow-hidden" data-url="{{ getConfig()->background_url }}">
+        <span class="bg-filter"></span>
+
+        <div class="container px-4 py-5 px-md-5 text-center text-lg-start h-100 d-flex justify-content-center  min-vh-100">
+
+            <div class="row w-100 gx-lg-5 align-items-center">
+
+                <div class="col-lg-5 col-md-12 col-sm-12 mb-lg-0 position-relative ">
+
+                    <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+                    <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+                    <div class="card bg-glass" style="">
+
+                        <div class="container-image">
+                            <img src="{{ asset('assets/common/images/adp-logo.png') }}" alt="logo" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7 col-md-12 col-sm-12 mb-lg-0 capaTwo" style="z-index: 10">
+                    <div class="card-body container-form-reset px-5 py-5" style=" border-radius: 10px;">
+                        <h2 class="text-center mb-4">Cambia tu contraseña</h2>
+                        <p class="text-center">
+                            Recuerda que debe tener 8 caracteres como mínimo
+                        </p>
+
+                        <form method="POST" action="{{ route('password.update') }}">
+                            @csrf
+
+                            <input type="hidden" name="token" value="{{ $token }}">
+
+                            <div class="form-group mb-3">
+                                <label for="email" class="form-label">Correo</label>
+                                <input id="email" type="email"
+                                    class="form-control @error('email') is-invalid @enderror" name="email"
+                                    value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input id="password" type="password"
+                                    class="form-control @error('password') is-invalid @enderror" name="password" required
+                                    autocomplete="new-password" placeholder="Ingresar su contraseña">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="password-confirm" class="form-label">Confirmar contraseña</label>
+                                <input id="password-confirm" type="password" class="form-control"
+                                    name="password_confirmation" required autocomplete="new-password"
+                                    placeholder="Confirmar su contraseña">
+                            </div>
+
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-primary btn-submit">
+                                    Restablecer contraseña
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+@endsection
+@section('js')
+    <script>
+        let bg = document.querySelector('.background-radial-gradient');
+        let url = bg.getAttribute('data-url');
+        bg.style.backgroundImage = `url(${url})`;
+        bg.classList.add('background-image');
+    </script>
+@endsection
